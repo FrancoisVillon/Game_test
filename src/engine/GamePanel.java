@@ -32,7 +32,7 @@ public class GamePanel extends JPanel
 
 	private void drawBackground(final Graphics graphics)
 	{
-		graphics.drawImage(background, 0, 0, null);
+		graphics.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null), null);
 	}
 
 	private void drawPlayer(final Graphics graphics)
