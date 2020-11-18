@@ -2,7 +2,6 @@ package engine.moving.logic;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,14 +17,7 @@ public class GameControlKeyListener implements KeyListener
 		final int key = event.getKeyCode();
 
 		this.keysPressed.add(key);		
-		try
-		{
-			GameWindow.getInstance().updatePlayerPosition(key);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		GameWindow.getInstance().updatePlayerPosition(key);
 	}
 
 	@Override
@@ -52,15 +44,22 @@ public class GameControlKeyListener implements KeyListener
 	
 	public Set<Integer> getAllKeysPressed()
 	{
+		//debug start-----------------------------
 		System.out.println("[");
 		for(int key : this.keysPressed)
 		{
 			this.displayKeyName(key);
 		}
 		System.out.println("]");
+		//debug end-------------------------------
+		
 		return this.keysPressed;
 	}
 
+	/**
+	 * Display the key name in the console. Debug only.
+	 * @param key
+	 */
 	private void displayKeyName(int key)
 	{
 		switch (key)
@@ -78,7 +77,7 @@ public class GameControlKeyListener implements KeyListener
 				System.out.println("Right");
 				break;
 			default:
-				System.out.println("Other key pressed");
+				System.out.println(String.format("Other key pressed (code %s)", key));
 				break;
 		}
 	}

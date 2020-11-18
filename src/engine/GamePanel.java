@@ -20,14 +20,16 @@ public class GamePanel extends JPanel
 	public GamePanel() throws IOException
 	{
 		this.background = ImageIO.read(BACKGROUND);
-		this.initPlayer();
 	}
 
 	@Override
 	public void paint(final Graphics graphics)
 	{
-		this.drawBackground(graphics);
-		this.drawPlayer(graphics);
+		if(graphics != null)
+		{
+			this.drawBackground(graphics);
+			this.drawPlayer(graphics);
+		}
 	}
 
 	private void drawBackground(final Graphics graphics)
@@ -37,10 +39,13 @@ public class GamePanel extends JPanel
 
 	private void drawPlayer(final Graphics graphics)
 	{
-		this.player.draw(graphics);
+		if(this.player != null)
+		{
+			this.player.draw(graphics);
+		}
 	}
 
-	private void initPlayer() throws IOException
+	public void initPlayer() throws IOException
 	{
 		this.player = new Player();
 

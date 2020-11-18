@@ -15,6 +15,9 @@ public class GameWindow extends JFrame
 {
 	public static final int WIDTH = 700;// 1400;
 	public static final int HEIGHT = 400;// 800;
+	
+	private static final int EXTERNAL_WIDTH = 6;
+	private static final int EXTERNAL_HEIGHT = 29;
 
 	private static final long serialVersionUID = 1L;
 	private static final File ICON = new File(Main.RESOURCES + "icon.png");
@@ -34,13 +37,15 @@ public class GameWindow extends JFrame
 
 		JFrame frame = new JFrame("FS4");
 		frame.setIconImage(ImageIO.read(ICON));
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(WIDTH + EXTERNAL_WIDTH, HEIGHT + EXTERNAL_HEIGHT);
 		frame.addKeyListener(this.keyListener);
 		frame.setContentPane(this.gamePanel);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
+
+		this.gamePanel.initPlayer();
 	}
 
 	/**
@@ -49,7 +54,7 @@ public class GameWindow extends JFrame
 	 * @return The instance
 	 * @throws IOException
 	 */
-	public static GameWindow getInstance() throws IOException
+	public static GameWindow getInstance()
 	{
 		GameWindow result = instance;
 
@@ -61,7 +66,14 @@ public class GameWindow extends JFrame
 
 				if (result == null)
 				{
-					instance = result = new GameWindow();
+					try
+					{
+						instance = result = new GameWindow();
+					}
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		}
