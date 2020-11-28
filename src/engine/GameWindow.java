@@ -15,7 +15,7 @@ public class GameWindow extends JFrame
 {
 	public static final int WIDTH = 700;// 1400;
 	public static final int HEIGHT = 400;// 800;
-	
+
 	private static final int EXTERNAL_WIDTH = 6;
 	private static final int EXTERNAL_HEIGHT = 29;
 
@@ -85,19 +85,37 @@ public class GameWindow extends JFrame
 		return this.gamePanel;
 	}
 
-	public boolean isKeyPressed(final int keyCode)
+	public GameControlKeyListener getKeyListener()
 	{
-		return this.keyListener.isKeyPressed(keyCode);
+		return this.keyListener;
 	}
 
-	public void updatePlayerPosition(final int key)
+	public KeyController getKeyController()
 	{
-		Player player = this.gamePanel.getPlayer();
+		return this.keyController;
+	}
+
+	/**
+	 * Updates the player from the last keyboard key pressed.
+	 * @param key The last key pressed
+	 */
+	public void updatePlayerFromKeyboard(final int key)
+	{
 		this.keyController.updateLastKeyPressed(key);
-
-		DirectionTuple dirs = Direction.fromKeysPressed(this.keyController.getLastAxisXKeyPressed(),
-				this.keyController.getLastAxisZKeyPressed(), this.keyListener.getAllKeysPressed());
-
-		player.move(dirs.getDirX(), dirs.getDirZ());
 	}
+
+	/**
+	 * Executed each ticks while the game is running.
+	 */
+	public void tick()
+	{
+		if (!this.getKeyListener().getAllKeysPressed().isEmpty())
+		{
+			DirectionTuple dirs = Direction.fromKeysPressed(this.getKeyController().getLastAxisXKeyPressed(),
+					this.getKeyController().getLastAxisZKeyPressed(), this.getKeyListener().getAllKeysPressed());
+
+			this.gamePanel.getPlayer().move(dirs.getDirX(), dirs.getDirZ());
+		}
+	}
+
 }

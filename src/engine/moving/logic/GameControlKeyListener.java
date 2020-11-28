@@ -17,14 +17,13 @@ public class GameControlKeyListener implements KeyListener
 		final int key = event.getKeyCode();
 
 		this.keysPressed.add(key);		
-		GameWindow.getInstance().updatePlayerPosition(key);
+		GameWindow.getInstance().updatePlayerFromKeyboard(key);
 	}
 
 	@Override
 	public void keyReleased(final KeyEvent event)
 	{
 		this.keysPressed.remove(event.getKeyCode());
-		//GameWindow.getInstance().updatePlayerPosition(GameControlKeys.NO_KEY);
 	}
 
 	@Override
@@ -45,12 +44,12 @@ public class GameControlKeyListener implements KeyListener
 	public Set<Integer> getAllKeysPressed()
 	{
 		//debug start-----------------------------
-		System.out.println("[");
-		for(int key : this.keysPressed)
-		{
-			this.displayKeyName(key);
-		}
-		System.out.println("]");
+//		System.out.println("[");
+//		for(int key : this.keysPressed)
+//		{
+//			this.displayKeyName(key);
+//		}
+//		System.out.println("]");
 		//debug end-------------------------------
 		
 		return this.keysPressed;
@@ -60,25 +59,25 @@ public class GameControlKeyListener implements KeyListener
 	 * Display the key name in the console. Debug only.
 	 * @param key
 	 */
-	private void displayKeyName(int key)
-	{
-		switch (key)
-		{
-			case GameControlKeys.DOWN:
-				System.out.println("Down");
-				break;
-			case GameControlKeys.UP:
-				System.out.println("Up");
-				break;
-			case GameControlKeys.LEFT:
-				System.out.println("Left");
-				break;
-			case GameControlKeys.RIGHT:
-				System.out.println("Right");
-				break;
-			default:
-				System.out.println(String.format("Other key pressed (code %s)", key));
-				break;
-		}
-	}
+//	private void displayKeyName(int key)
+//	{
+//		switch (key)
+//		{
+//			case GameControlKeys.DOWN:
+//				System.out.println("Down");
+//				break;
+//			case GameControlKeys.UP:
+//				System.out.println("Up");
+//				break;
+//			case GameControlKeys.LEFT:
+//				System.out.println("Left");
+//				break;
+//			case GameControlKeys.RIGHT:
+//				System.out.println("Right");
+//				break;
+//			default:
+//				System.out.println(String.format("Other key pressed (code %s)", key));
+//				break;
+//		}
+//	}
 }
