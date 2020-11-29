@@ -1,11 +1,17 @@
 package engine;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
+
+import engine.game.AutoMovingPhysicalElement;
+import engine.moving.logic.Direction;
+import engine.moving.logic.MovingPattern;
 
 public class Main
 {
 	public static final String RESOURCES = "resources/";
-	
+
 	/**
 	 * Duration of a tick in milliseconds.
 	 */
@@ -17,6 +23,40 @@ public class Main
 
 		// Instantiates the game window.
 		GameWindow gameWindow = GameWindow.getInstance();
+
+		MovingPattern pattern = MovingPattern.Builder.init()
+				.addHorizontal(20L, Direction.LEFT)
+				.addVertical(20L, Direction.DOWN)
+				.addMovement(20L, Direction.RIGHT, Direction.UP)
+				.build();
+		
+		AutoMovingPhysicalElement mov;
+		
+		MovingPattern pattern2 = MovingPattern.Builder.init()
+				.addVertical(20L, Direction.DOWN)
+				.addHorizontal(20L, Direction.LEFT)
+				.addMovement(20L, Direction.RIGHT, Direction.UP)
+				.build();
+		
+		AutoMovingPhysicalElement mov2;
+		
+		try
+		{
+			mov = new AutoMovingPhysicalElement();
+			mov.setPattern(pattern);
+			mov.add();
+			
+			mov2 = new AutoMovingPhysicalElement();
+			mov2.setPattern(pattern2);
+			mov2.add();
+			
+			mov.setPosition(GameWindow.WIDTH / 2, GameWindow.HEIGHT / 2);
+			mov2.setPosition(GameWindow.WIDTH / 2, GameWindow.HEIGHT / 2);
+		}
+		catch (IOException | InvalidPositionException e)
+		{
+			System.err.println(e.getMessage());
+		}
 
 		daemon(gameWindow);
 	}

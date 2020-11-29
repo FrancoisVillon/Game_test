@@ -2,10 +2,16 @@ package engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import engine.game.AutoMovingPhysicalElement;
+import engine.game.GraphicalElement;
+import engine.game.PhysicalElement;
+import engine.game.Player;
 import engine.moving.logic.Direction;
 import engine.moving.logic.DirectionTuple;
 import engine.moving.logic.GameControlKeyListener;
@@ -28,6 +34,13 @@ public class GameWindow extends JFrame
 	private final GameControlKeyListener keyListener;
 	private final KeyController keyController;
 	private final GamePanel gamePanel;
+	
+	private final List<GraphicalElement> graphicalElements = new ArrayList<>();
+	private final List<PhysicalElement> immovableElements = new ArrayList<>();
+	private final List<AutoMovingPhysicalElement> movingElements = new ArrayList<>();
+	
+	//Unused for now
+	private final List<Player> players = new ArrayList<>();
 
 	private GameWindow() throws IOException
 	{
@@ -104,10 +117,69 @@ public class GameWindow extends JFrame
 		this.keyController.updateLastKeyPressed(key);
 	}
 
+	public List<GraphicalElement> getGraphicalElements()
+	{
+		return graphicalElements;
+	}
+
+	public List<PhysicalElement> getImmovableElements()
+	{
+		return immovableElements;
+	}
+
+	public List<AutoMovingPhysicalElement> getMovingElements()
+	{
+		return movingElements;
+	}
+	
+	public List<Player> getPlayers()
+	{
+		return players;
+	}
+	
 	/**
 	 * Executed each ticks while the game is running.
 	 */
 	public void tick()
+	{
+		this.movePlayers();		
+		this.moveAutomovableElements();
+
+		this.tickElements();
+		GameWindow.getInstance().getGamePanel().repaint();
+//		GameWindow.getInstance().getGamePanel().paintAll(getGraphics());
+	}
+	
+	private void tickElements()
+	{
+		for(AutoMovingPhysicalElement automov : this.movingElements)
+		{
+			automov.incrementTick();
+		}
+		
+		for(Player player : this.players)
+		{
+			player.incrementTick();
+		}
+		
+	}
+
+	/**
+	 * Moves all auto movable elements each game tick.
+	 */
+	private void moveAutomovableElements()
+	{
+		for(AutoMovingPhysicalElement automov : this.movingElements)
+		{
+			DirectionTuple dirs = automov.getPattern().getMovementAt(automov.getTicksExisted());
+			automov.move(dirs.getDirX(), dirs.getDirZ());
+		}
+	}
+
+	/**
+	 * Moves players each game tick.
+	 */
+	private void movePlayers()
 	{
 		if (!this.getKeyListener().getAllKeysPressed().isEmpty())
 		{
@@ -117,5 +189,4 @@ public class GameWindow extends JFrame
 			this.gamePanel.getPlayer().move(dirs.getDirX(), dirs.getDirZ());
 		}
 	}
-
 }

@@ -1,4 +1,4 @@
-package engine;
+package engine.game;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,28 +9,40 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import engine.moving.logic.Direction;
+import engine.GameWindow;
+import engine.InvalidPositionException;
+import engine.Main;
 
-public class Player
+/**
+ * All the elements that will be displayed in the game map.
+ */
+public class GraphicalElement
 {
-	private static final File PLAYER_TEXTURE = new File(Main.RESOURCES + "icon.png");
+	protected static final File DEFAULT_TEXTURE = new File(Main.RESOURCES + "default.png");
 	private static final int HITBOX_WIDTH = 16;
 	private static final int HITBOX_HEIGHT = 16;
+	
+	protected static final Rectangle DEFAULT_HITBOX = new Rectangle(HITBOX_WIDTH, HITBOX_HEIGHT);
 
 	private final Image texture;
 
 	/**
 	 * The hitbox is centered around posX and posZ.
 	 */
-	private final Rectangle hitbox = new Rectangle(HITBOX_WIDTH, HITBOX_HEIGHT);
+	private final Rectangle graphicalBox;
 
 	private int posX;
 	private int posZ;
-	private int updatePositionSpeed = 2;
 
-	public Player() throws IOException
+	public GraphicalElement(final File texture, final Rectangle graphicalBox) throws IOException
 	{
-		this.texture = ImageIO.read(PLAYER_TEXTURE);
+		this.texture = ImageIO.read(texture);
+		this.graphicalBox = graphicalBox;
+	}
+
+	public GraphicalElement() throws IOException
+	{
+		this(DEFAULT_TEXTURE, DEFAULT_HITBOX);
 	}
 
 	/**
@@ -51,7 +63,7 @@ public class Player
 		{
 			this.posX = x;
 			this.posZ = z;
-			this.hitbox.setLocation(new Point(x - hitbox.width / 2, z - hitbox.height / 2));
+			this.graphicalBox.setLocation(new Point(x - graphicalBox.width / 2, z - graphicalBox.height / 2));
 		}
 	}
 
@@ -73,9 +85,9 @@ public class Player
 		return this.texture;
 	}
 
-	public Rectangle getHitbox()
+	public Rectangle getGraphicalBox()
 	{
-		return this.hitbox;
+		return this.graphicalBox;
 	}
 
 	/**
@@ -94,43 +106,17 @@ public class Player
 		return posZ;
 	}
 
-	/**
-	 * @return the updatePositionSpeed
-	 */
-	public int getUpdatePositionSpeed()
-	{
-		return updatePositionSpeed;
-	}
-
-	/**
-	 * @param updatePositionSpeed the updatePositionSpeed to set
-	 */
-	public void setUpdatePositionSpeed(int updatePositionSpeed)
-	{
-		this.updatePositionSpeed = updatePositionSpeed;
-	}
-
 	public void draw(final Graphics graphics)
 	{
-		graphics.drawImage(this.texture, this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height, null);
+		graphics.drawImage(this.texture, this.graphicalBox.x, this.graphicalBox.y, this.graphicalBox.width,
+				this.graphicalBox.height, null);
 	}
-
-	public void move(final Direction dirX, final Direction dirZ)
+	
+	/**
+	 * Adds this element to the game.
+	 */
+	public void add()
 	{
-		if (dirX != Direction.NONE || dirZ != Direction.NONE)
-		{
-			final int newX = this.posX + dirX.getSens() * this.updatePositionSpeed;
-			final int newZ = this.posZ + dirZ.getSens() * this.updatePositionSpeed;
-
-			try
-			{
-				this.setPosition(newX, newZ);
-				GameWindow.getInstance().getGamePanel().repaint();
-			}
-			catch (InvalidPositionException e)
-			{
-
-			}
-		}
+		GameWindow.getInstance().getGraphicalElements().add(this);
 	}
 }

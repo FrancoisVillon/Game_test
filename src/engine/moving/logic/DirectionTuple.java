@@ -2,6 +2,8 @@ package engine.moving.logic;
 
 public class DirectionTuple
 {
+	public static final DirectionTuple NONE = new DirectionTuple(Direction.NONE, Direction.NONE);
+	
 	private final Direction dirX;
 	private final Direction dirZ;
 	
