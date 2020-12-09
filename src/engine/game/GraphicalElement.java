@@ -1,6 +1,7 @@
 package engine.game;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -16,14 +17,12 @@ import engine.Main;
 /**
  * All the elements that will be displayed in the game map.
  */
-public class GraphicalElement
+public class GraphicalElement// extends JComponent
 {
 	protected static final File DEFAULT_TEXTURE = new File(Main.RESOURCES + "default.png");
-	private static final int HITBOX_WIDTH = 16;
-	private static final int HITBOX_HEIGHT = 16;
+	protected static final int HITBOX_WIDTH = 16;
+	protected static final int HITBOX_HEIGHT = 16;
 	
-	protected static final Rectangle DEFAULT_HITBOX = new Rectangle(HITBOX_WIDTH, HITBOX_HEIGHT);
-
 	private final Image texture;
 
 	/**
@@ -42,7 +41,7 @@ public class GraphicalElement
 
 	public GraphicalElement() throws IOException
 	{
-		this(DEFAULT_TEXTURE, DEFAULT_HITBOX);
+		this(DEFAULT_TEXTURE, new Rectangle(HITBOX_WIDTH, HITBOX_HEIGHT));
 	}
 
 	/**
@@ -106,9 +105,10 @@ public class GraphicalElement
 		return posZ;
 	}
 
-	public void draw(final Graphics graphics)
+	public void paintElement(final Graphics graphics)
 	{
-		graphics.drawImage(this.texture, this.graphicalBox.x, this.graphicalBox.y, this.graphicalBox.width,
+		Graphics2D graphics2D = (Graphics2D) graphics;
+		graphics2D.drawImage(this.texture, this.graphicalBox.x, this.graphicalBox.y, this.graphicalBox.width,
 				this.graphicalBox.height, null);
 	}
 	

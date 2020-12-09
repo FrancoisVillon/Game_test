@@ -1,5 +1,6 @@
 package engine.game;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ public class Player extends MovingPhysicalElement
 
 	public Player() throws IOException
 	{
-		super(PLAYER_TEXTURE, DEFAULT_HITBOX);
+		super(PLAYER_TEXTURE, new Rectangle(HITBOX_WIDTH, HITBOX_HEIGHT));
 	}
 	
 	public void setPosition(final int x, final int z) throws InvalidPositionException

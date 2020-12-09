@@ -17,8 +17,6 @@ public class GamePanel extends JPanel
 	private static final long serialVersionUID = 1L;
 	private static final File BACKGROUND = new File(Main.RESOURCES + "background.png");
 
-	private Player player;
-
 	private final Image background;
 
 	public GamePanel() throws IOException
@@ -29,12 +27,26 @@ public class GamePanel extends JPanel
 	@Override
 	public void paint(final Graphics graphics)
 	{
-		super.paint(graphics);
-		
 		if(graphics != null)
 		{
+			super.paint(graphics);
+			
 			this.drawBackground(graphics);
-			this.drawPlayer(graphics);
+			this.drawPlayers(graphics);
+			this.drawElements(graphics);
+		}
+	}
+	
+	@Override
+	public void repaint()
+	{
+		final Graphics graphics = this.getGraphics();
+		if(graphics != null)
+		{
+			super.paint(graphics);
+			
+			this.drawBackground(graphics);
+			this.drawPlayers(graphics);
 			this.drawElements(graphics);
 		}
 	}
@@ -45,7 +57,7 @@ public class GamePanel extends JPanel
 		
 		for(AutoMovingPhysicalElement mov : movs)
 		{
-			mov.draw(graphics);
+			mov.paintElement(graphics);
 		}
 		
 	}
@@ -55,30 +67,13 @@ public class GamePanel extends JPanel
 		graphics.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null), null);
 	}
 
-	private void drawPlayer(final Graphics graphics)
+	private void drawPlayers(final Graphics graphics)
 	{
-		if(this.player != null)
+		List<Player> players = GameWindow.getInstance().getPlayers();
+		
+		for(Player player : players)
 		{
-			this.player.draw(graphics);
+			player.paintElement(graphics);
 		}
-	}
-
-	public void initPlayer() throws IOException
-	{
-		this.player = new Player();
-
-		try
-		{
-			this.player.setPosition(GameWindow.WIDTH / 2, GameWindow.HEIGHT / 2);
-		}
-		catch (InvalidPositionException e)
-		{
-			System.err.println(e.getMessage());
-		}
-	}
-
-	public Player getPlayer()
-	{
-		return this.player;
 	}
 }

@@ -24,7 +24,7 @@ public abstract class MovingPhysicalElement extends PhysicalElement
 	
 	public MovingPhysicalElement() throws IOException
 	{
-		this(DEFAULT_TEXTURE, DEFAULT_HITBOX);
+		this(DEFAULT_TEXTURE, new Rectangle(HITBOX_WIDTH, HITBOX_HEIGHT));
 	}
 	
 	/**

@@ -57,8 +57,6 @@ public class GameWindow extends JFrame
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
-
-		this.gamePanel.initPlayer();
 	}
 
 	/**
@@ -146,7 +144,8 @@ public class GameWindow extends JFrame
 		this.moveAutomovableElements();
 
 		this.tickElements();
-		GameWindow.getInstance().getGamePanel().repaint();
+//		this.getGamePanel().paint(this.getGraphics());
+		this.getGamePanel().repaint();
 //		GameWindow.getInstance().getGamePanel().paintAll(getGraphics());
 	}
 	
@@ -186,7 +185,10 @@ public class GameWindow extends JFrame
 			DirectionTuple dirs = Direction.fromKeysPressed(this.getKeyController().getLastAxisXKeyPressed(),
 					this.getKeyController().getLastAxisZKeyPressed(), this.getKeyListener().getAllKeysPressed());
 
-			this.gamePanel.getPlayer().move(dirs.getDirX(), dirs.getDirZ());
+			for(Player player : this.getPlayers())
+			{
+				player.move(dirs.getDirX(), dirs.getDirZ());
+			}
 		}
 	}
 }

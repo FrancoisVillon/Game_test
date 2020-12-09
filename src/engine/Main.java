@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 import engine.game.AutoMovingPhysicalElement;
+import engine.game.Player;
 import engine.moving.logic.Direction;
 import engine.moving.logic.MovingPattern;
 
@@ -23,6 +24,8 @@ public class Main
 
 		// Instantiates the game window.
 		GameWindow gameWindow = GameWindow.getInstance();
+		
+		Player player;
 
 		MovingPattern pattern = MovingPattern.Builder.init()
 				.addHorizontal(20L, Direction.LEFT)
@@ -34,24 +37,30 @@ public class Main
 		
 		MovingPattern pattern2 = MovingPattern.Builder.init()
 				.addVertical(20L, Direction.DOWN)
-				.addHorizontal(20L, Direction.LEFT)
+				.addHorizontal(10L, Direction.LEFT)
 				.addMovement(20L, Direction.RIGHT, Direction.UP)
+				.addHorizontal(10L, Direction.LEFT)
 				.build();
 		
 		AutoMovingPhysicalElement mov2;
 		
 		try
 		{
+			player = new Player();
+			player.add();
+			
 			mov = new AutoMovingPhysicalElement();
 			mov.setPattern(pattern);
 			mov.add();
 			
 			mov2 = new AutoMovingPhysicalElement();
 			mov2.setPattern(pattern2);
+			mov2.setUpdatePositionSpeed(4);
 			mov2.add();
 			
-			mov.setPosition(GameWindow.WIDTH / 2, GameWindow.HEIGHT / 2);
-			mov2.setPosition(GameWindow.WIDTH / 2, GameWindow.HEIGHT / 2);
+			player.setPosition(GameWindow.WIDTH / 2, GameWindow.HEIGHT / 2);
+			mov.setPosition(GameWindow.WIDTH / 4, GameWindow.HEIGHT / 2);
+			mov2.setPosition(3*GameWindow.WIDTH / 4, GameWindow.HEIGHT / 2);
 		}
 		catch (IOException | InvalidPositionException e)
 		{

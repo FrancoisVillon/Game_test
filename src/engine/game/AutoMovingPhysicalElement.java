@@ -14,7 +14,7 @@ public class AutoMovingPhysicalElement extends MovingPhysicalElement
 	 */
 	private MovingPattern pattern;
 	
-	public AutoMovingPhysicalElement(File texture, Rectangle graphicalBox, Rectangle hitbox) throws IOException
+	public AutoMovingPhysicalElement(final File texture, final Rectangle graphicalBox, final Rectangle hitbox) throws IOException
 	{
 		super(texture, graphicalBox, hitbox);
 	}
@@ -36,6 +36,7 @@ public class AutoMovingPhysicalElement extends MovingPhysicalElement
 	public void add()
 	{
 		GameWindow.getInstance().getMovingElements().add(this);
+		//GameWindow.getInstance().getGamePanel().add(this);
 	}
 
 	public MovingPattern getPattern()
@@ -43,10 +44,8 @@ public class AutoMovingPhysicalElement extends MovingPhysicalElement
 		return pattern;
 	}
 
-	public void setPattern(MovingPattern pattern)
+	public void setPattern(final MovingPattern pattern)
 	{
 		this.pattern = pattern;
 	}
-	
-	
 }
