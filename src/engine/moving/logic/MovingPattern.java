@@ -29,7 +29,7 @@ public class MovingPattern
 			
 			for(Tuple<Long, DirectionTuple> movement : this.movementList)
 			{
-				if(time <= movement.getFirstElement())
+				if(time < movement.getFirstElement())
 				{
 					return movement.getSecondElement();
 				}

@@ -38,8 +38,6 @@ public class GameWindow extends JFrame
 	private final List<GraphicalElement> graphicalElements = new ArrayList<>();
 	private final List<PhysicalElement> immovableElements = new ArrayList<>();
 	private final List<AutoMovingPhysicalElement> movingElements = new ArrayList<>();
-	
-	//Unused for now
 	private final List<Player> players = new ArrayList<>();
 
 	private GameWindow() throws IOException
@@ -144,9 +142,7 @@ public class GameWindow extends JFrame
 		this.moveAutomovableElements();
 
 		this.tickElements();
-//		this.getGamePanel().paint(this.getGraphics());
 		this.getGamePanel().repaint();
-//		GameWindow.getInstance().getGamePanel().paintAll(getGraphics());
 	}
 	
 	private void tickElements()
