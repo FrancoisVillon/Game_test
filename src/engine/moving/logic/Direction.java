@@ -4,7 +4,7 @@ import java.util.Set;
 
 public enum Direction
 {
-	UP(Axis.Z, -1), DOWN(Axis.Z, 1), LEFT(Axis.X, -1), RIGHT(Axis.X, 1), NONE(Axis.NONE, 0);
+	SPACE(Axis.Z, -2), UP(Axis.Z, -1), DOWN(Axis.Z, 1), LEFT(Axis.X, -1), RIGHT(Axis.X, 1), NONE(Axis.NONE, 0);
 
 	private final Axis axis;
 	private final int sens;
@@ -29,6 +29,8 @@ public enum Direction
 	{
 		switch (key)
 		{
+		case GameControlKeys.SPACE:
+			return SPACE;
 		case GameControlKeys.DOWN:
 			return DOWN;
 		case GameControlKeys.LEFT:

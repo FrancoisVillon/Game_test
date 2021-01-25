@@ -10,6 +10,7 @@ public class GameControlKeys
 	public static final int DOWN = KeyEvent.VK_DOWN;
 	public static final int LEFT = KeyEvent.VK_LEFT;
 	public static final int RIGHT = KeyEvent.VK_RIGHT;
+	public static final int SPACE = KeyEvent.VK_SPACE;
 	
 	public static final int SHOT = 0;
 	public static final int ACTION = 0;
@@ -28,7 +29,9 @@ public class GameControlKeys
 		DIRECTION_KEYS.add(DOWN);
 		DIRECTION_KEYS.add(LEFT);
 		DIRECTION_KEYS.add(RIGHT);
-
+		DIRECTION_KEYS.add(SPACE);
+		
+		DIRECTION_KEYS_Z.add(SPACE);
 		DIRECTION_KEYS_Z.add(UP);
 		DIRECTION_KEYS_Z.add(DOWN);
 		
